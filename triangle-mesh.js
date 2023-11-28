@@ -1,8 +1,34 @@
 import { EdgesGeometry } from "three";
 import { LineSegments } from "three";
+import { Vector3 } from "three";
 import { LineBasicMaterial } from "three";
 import { BufferGeometry, MeshBasicMaterial } from "three";
 import { BufferAttribute, Mesh, DoubleSide } from "three";
+
+function triangleNormal(vertices) {
+  // assumes vertices is a Float32Array where each three numbers is a triangle vertex
+  const a = new Vector3(vertices[0], vertices[1], vertices[2]);
+  const b = new Vector3(vertices[3], vertices[4], vertices[5]);
+  const c = new Vector3(vertices[6], vertices[7], vertices[8]);
+
+  return b.sub(a).cross(c.sub(a)).normalize();
+}
+
+function triangleColor(normal) {
+  // use the x direction to pick between the darkest and lightest gray
+  // normal is a unit vector, so x is between -1 and 1
+  const xScale = (normal.x + 1) / 2;
+
+  const darkestGray = 0x22;
+  const lightestGray = 0x99;
+
+  const gray = Math.floor(xScale * (darkestGray - lightestGray) + lightestGray);
+
+  const r = gray << 16;
+  const g = gray << 8;
+  const b = gray;
+  return r + g + b;
+}
 
 export class TriangleMesh extends Mesh {
   constructor() {
@@ -21,8 +47,12 @@ export class TriangleMesh extends Mesh {
     const geometry = new BufferGeometry();
     geometry.setAttribute("position", new BufferAttribute(vertices, 3));
 
+    const normal = triangleNormal(vertices);
+    const color = triangleColor(normal);
+    console.log(normal);
+    console.log(color.toString(16));
     const material = new MeshBasicMaterial({
-      color: 0xff0000,
+      color,
       side: DoubleSide,
     });
 
