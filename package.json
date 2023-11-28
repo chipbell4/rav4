@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "format": "prettier -w *.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -12,6 +13,7 @@
     "three": "^0.158.0"
   },
   "devDependencies": {
+    "prettier": "^3.1.0",
     "vite": "^5.0.2"
   }
 }
