@@ -1,9 +1,14 @@
-import { EdgesGeometry } from "three";
-import { LineSegments } from "three";
-import { Vector3 } from "three";
-import { LineBasicMaterial } from "three";
-import { BufferGeometry, MeshBasicMaterial } from "three";
-import { BufferAttribute, Mesh, DoubleSide } from "three";
+import {
+  EdgesGeometry,
+  LineSegments,
+  Vector3,
+  LineBasicMaterial,
+  BufferGeometry,
+  MeshBasicMaterial,
+  BufferAttribute,
+  Mesh,
+  DoubleSide,
+} from "three";
 
 function triangleNormal(vertices) {
   // assumes vertices is a Float32Array where each three numbers is a triangle vertex
