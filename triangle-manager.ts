@@ -64,8 +64,8 @@ export class TriangleManager {
         const nextContour = generateContour(CONTOUR_CONFIG);
 
         for (let i = 0; i < nextContour.length - 1; i++) {
-            const t0 = i / nextContour.length;
-            const t1 = (i + 1) / nextContour.length;
+            const t0 = i / (nextContour.length - 1);
+            const t1 = (i + 1) / (nextContour.length - 1);
             const x0 = CONTOUR_CONFIG.x.min + t0 * (CONTOUR_CONFIG.x.max - CONTOUR_CONFIG.x.min);
             const x1 = CONTOUR_CONFIG.x.min + t1 * (CONTOUR_CONFIG.x.max - CONTOUR_CONFIG.x.min);
             const y0Front = this.currentContour[i];
@@ -73,7 +73,7 @@ export class TriangleManager {
             const y0Back = nextContour[i];
             const y1Back = nextContour[i+1];
             const z0 = this.currentZ;
-            const z1 = this.currentZ + TRIANGLE_DEPTH;
+            const z1 = this.currentZ - TRIANGLE_DEPTH;
 
             // define 4 points two make two triangles
             const frontLeft = [x0, y0Front, z0];
@@ -98,6 +98,7 @@ export class TriangleManager {
         }
 
         this.currentZ -= TRIANGLE_DEPTH;
+        this.currentContour = nextContour;
     }
 
     moveTriangles(dt: number) {
