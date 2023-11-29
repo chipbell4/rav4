@@ -123,6 +123,7 @@ export class TriangleManager {
       }
     }
 
+    // TODO: This results in a lot of GC, which I'd like to avoid...
     this.triangles = keepers;
   }
 
