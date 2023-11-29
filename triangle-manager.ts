@@ -35,8 +35,8 @@ const CONTOUR_CONFIG: ContourProps = {
         step: 1,
     },
     y: {
-        min: -0.2,
-        max: 0.2,
+        min: -0.4,
+        max: 0.4,
     }
 }
 
@@ -52,10 +52,12 @@ export class TriangleManager {
         this.scene = scene;
         this.triangles = [];
         this.currentContour = generateContour(CONTOUR_CONFIG);
-        this.currentZ = 0;
+        
+        
+        this.currentZ = 5;
 
         // add a few rows
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 20; i++) {
             this.addRow();
         }
     }
@@ -111,7 +113,7 @@ export class TriangleManager {
     }
 
     pruneInvisible() {
-        const PRUNE_Z = 8; // TODO: Tune for performance.
+        const PRUNE_Z = 20; // TODO: Tune for performance.
 
         const keepers: TriangleMesh[] = [];
         for (const triangle of this.triangles) {
