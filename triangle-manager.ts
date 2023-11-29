@@ -54,7 +54,10 @@ export class TriangleManager {
         this.currentContour = generateContour(CONTOUR_CONFIG);
         this.currentZ = 0;
 
-        this.addRow();
+        // add a few rows
+        for (let i = 0; i < 10; i++) {
+            this.addRow();
+        }
     }
 
     addRow() {
@@ -97,7 +100,7 @@ export class TriangleManager {
         this.currentZ -= TRIANGLE_DEPTH;
     }
 
-    moveTriangles(dt) {
+    moveTriangles(dt: number) {
         const VELOCITY = 1.0;
         for (const triangle of this.triangles) {
             triangle.position.z += dt * VELOCITY;
