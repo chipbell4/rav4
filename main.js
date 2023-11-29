@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import { camera } from "./camera";
-import { TriangleMesh } from "./triangle-mesh";
 import { TriangleManager } from "./triangle-manager";
 
 const scene = new THREE.Scene();
