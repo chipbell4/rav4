@@ -16,7 +16,7 @@ camera.position.z = 5;
 function animate() {
   requestAnimationFrame(animate);
 
-  manager.moveTriangles(1 / 60);
+  manager.update(1 / 60);
 
   renderer.render(scene, camera);
 }

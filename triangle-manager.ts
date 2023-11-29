@@ -124,4 +124,16 @@ export class TriangleManager {
 
         this.triangles = keepers;
     }
+
+    get needsAnotherRow(): boolean {
+        return this.currentZ > -9;
+    }
+
+    update(dt: number) {
+        this.moveTriangles(dt);
+        this.pruneInvisible();
+        if (this.needsAnotherRow) {
+            this.addRow();
+        }
+    }
 }
