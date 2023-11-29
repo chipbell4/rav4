@@ -11,6 +11,7 @@ document.body.appendChild(renderer.domElement);
 
 const manager = new TriangleManager(scene);
 
+camera.position.y = 2;
 camera.position.z = 5;
 
 function animate() {
