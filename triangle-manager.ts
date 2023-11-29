@@ -35,8 +35,8 @@ const CONTOUR_CONFIG: ContourProps = {
         step: 1,
     },
     y: {
-        min: -1,
-        max: 1,
+        min: -0.2,
+        max: 0.2,
     }
 }
 
@@ -65,16 +65,18 @@ export class TriangleManager {
             const t1 = (i + 1) / nextContour.length;
             const x0 = CONTOUR_CONFIG.x.min + t0 * (CONTOUR_CONFIG.x.max - CONTOUR_CONFIG.x.min);
             const x1 = CONTOUR_CONFIG.x.min + t1 * (CONTOUR_CONFIG.x.max - CONTOUR_CONFIG.x.min);
-            const y0 = this.currentContour[i];
-            const y1 = nextContour[i];
+            const y0Front = this.currentContour[i];
+            const y1Front = this.currentContour[i+1];
+            const y0Back = nextContour[i];
+            const y1Back = nextContour[i+1];
             const z0 = this.currentZ;
             const z1 = this.currentZ + TRIANGLE_DEPTH;
 
             // define 4 points two make two triangles
-            const frontLeft = [x0, y0, z0];
-            const frontRight = [x1, y1, z0];
-            const backLeft = [x0, y0, z1];
-            const backRight = [x1, y1, z1];
+            const frontLeft = [x0, y0Front, z0];
+            const frontRight = [x1, y1Front, z0];
+            const backLeft = [x0, y0Back, z1];
+            const backRight = [x1, y1Back, z1];
 
             const left = new TriangleMesh(new Float32Array([
                 ...frontLeft,
