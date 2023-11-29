@@ -110,12 +110,11 @@ export class TriangleManager {
     }
 
     pruneInvisible() {
-        const PRUNE_Z = 20; // TODO: Tune for performance.
+        const PRUNE_Z = 8; // TODO: Tune for performance.
 
         const keepers: TriangleMesh[] = [];
         for (const triangle of this.triangles) {
-            triangle.geometry.computeBoundingBox();
-            if(triangle.geometry.boundingBox!.min.z > PRUNE_Z) {
+            if(triangle.position.z > PRUNE_Z) {
                 this.scene.remove(triangle);
             } else {
                 keepers.push(triangle);
