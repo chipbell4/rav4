@@ -37,27 +37,11 @@ function triangleColor(normal) {
 
 export class TriangleMesh extends Mesh {
   constructor(vertices) {
-    /*
-    const vertices = new Float32Array([
-      0,
-      0,
-      0, // v0
-      1,
-      0,
-      0, // v1
-      1,
-      1,
-      0, // v2
-    ]);
-    */
-
     const geometry = new BufferGeometry();
     geometry.setAttribute("position", new BufferAttribute(vertices, 3));
 
     const normal = triangleNormal(vertices);
     const color = triangleColor(normal);
-    console.log(normal);
-    console.log(color.toString(16));
     const material = new MeshBasicMaterial({
       color,
       side: DoubleSide,
