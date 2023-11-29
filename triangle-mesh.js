@@ -36,7 +36,8 @@ function triangleColor(normal) {
 }
 
 export class TriangleMesh extends Mesh {
-  constructor() {
+  constructor(vertices) {
+    /*
     const vertices = new Float32Array([
       0,
       0,
@@ -48,6 +49,7 @@ export class TriangleMesh extends Mesh {
       1,
       0, // v2
     ]);
+    */
 
     const geometry = new BufferGeometry();
     geometry.setAttribute("position", new BufferAttribute(vertices, 3));
