@@ -104,7 +104,7 @@ export class TriangleManager {
     }
 
     moveTriangles(dt: number) {
-        const VELOCITY = 1.0;
+        const VELOCITY = 2.0;
         for (const triangle of this.triangles) {
             triangle.position.z += dt * VELOCITY;
         }

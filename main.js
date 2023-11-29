@@ -10,7 +10,7 @@ document.body.appendChild(renderer.domElement);
 
 const manager = new TriangleManager(scene);
 
-camera.position.y = 2;
+camera.position.y = 1;
 camera.position.z = 5;
 
 function animate() {

@@ -24,8 +24,8 @@ function triangleColor(normal) {
   // normal is a unit vector, so x is between -1 and 1
   const xScale = (normal.x + 1) / 2;
 
-  const darkestGray = 0x22;
-  const lightestGray = 0x99;
+  const darkestGray = 0x00;
+  const lightestGray = 0xbb;
 
   const gray = Math.floor(xScale * (darkestGray - lightestGray) + lightestGray);
 
