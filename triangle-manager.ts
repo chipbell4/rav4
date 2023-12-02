@@ -44,13 +44,13 @@ const TRIANGLE_DEPTH = 1.0;
 
 export class TriangleManager {
   scene: Scene;
-  triangles: TriangleMesh[];
+  rows: TriangleMesh[][];
   currentContour: number[];
   currentZ: number;
 
   constructor(scene: Scene) {
     this.scene = scene;
-    this.triangles = [];
+    this.rows = [];
     this.currentContour = generateContour(CONTOUR_CONFIG);
 
     this.currentZ = 5;
@@ -63,6 +63,8 @@ export class TriangleManager {
 
   addRow() {
     const nextContour = generateContour(CONTOUR_CONFIG);
+
+    const row: TriangleMesh[] = [];
 
     for (let i = 0; i < nextContour.length - 1; i++) {
       const t0 = i / (nextContour.length - 1);
@@ -89,38 +91,35 @@ export class TriangleManager {
       const left = new TriangleMesh([frontLeft, frontRight, backLeft]);
       const right = new TriangleMesh([frontRight, backLeft, backRight]);
 
-      this.triangles.push(left, right);
+      row.push(left, right);
       this.scene.add(left);
       this.scene.add(right);
     }
 
+    this.rows.push(row);
     this.currentZ -= TRIANGLE_DEPTH;
     this.currentContour = nextContour;
   }
 
   moveTriangles(dt: number) {
     const VELOCITY = 2.0;
-    for (const triangle of this.triangles) {
-      triangle.position.z += dt * VELOCITY;
+    for (const row of this.rows) {
+        for (const triangle of row) {
+            triangle.position.z += dt * VELOCITY;
+          }
     }
-
+    
     this.currentZ += dt * VELOCITY;
   }
 
   pruneInvisible() {
     const PRUNE_Z = 20; // TODO: Tune for performance.
 
-    const keepers: TriangleMesh[] = [];
-    for (const triangle of this.triangles) {
-      if (triangle.position.z > PRUNE_Z) {
-        this.scene.remove(triangle);
-      } else {
-        keepers.push(triangle);
-      }
+    // we only need to look at the first row since it's the closest. Moreover, all of the triangles in that row will
+    // have the same Z so we only need to look at the first element before pruning the whole row
+    if (this.rows[0][0].position.z > PRUNE_Z) {
+        this.rows.splice(0, 1);
     }
-
-    // TODO: This results in a lot of GC, which I'd like to avoid...
-    this.triangles = keepers;
   }
 
   get needsAnotherRow(): boolean {
