@@ -44,7 +44,7 @@ export class TriangleMesh extends Mesh {
       vertices[2].x,
       vertices[2].y,
       vertices[2].z,
-    ])
+    ]);
     geometry.setAttribute("position", new BufferAttribute(bufferData, 3));
 
     const normal = triangleNormal(vertices);
