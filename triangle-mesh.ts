@@ -10,13 +10,9 @@ import {
   DoubleSide,
 } from "three";
 
-function triangleNormal(vertices) {
-  // assumes vertices is a Float32Array where each three numbers is a triangle vertex
-  const a = new Vector3(vertices[0], vertices[1], vertices[2]);
-  const b = new Vector3(vertices[3], vertices[4], vertices[5]);
-  const c = new Vector3(vertices[6], vertices[7], vertices[8]);
-
-  return b.sub(a).cross(c.sub(a)).normalize();
+function triangleNormal(vertices: Vector3[]) {
+  const [a, b, c] = vertices;
+  return b.clone().sub(a).cross(c.clone().sub(a)).normalize();
 }
 
 function triangleColor(normal) {
@@ -36,9 +32,20 @@ function triangleColor(normal) {
 }
 
 export class TriangleMesh extends Mesh {
-  constructor(vertices) {
+  constructor(vertices: Vector3[]) {
     const geometry = new BufferGeometry();
-    geometry.setAttribute("position", new BufferAttribute(vertices, 3));
+    const bufferData = new Float32Array([
+      vertices[0].x,
+      vertices[0].y,
+      vertices[0].z,
+      vertices[1].x,
+      vertices[1].y,
+      vertices[1].z,
+      vertices[2].x,
+      vertices[2].y,
+      vertices[2].z,
+    ])
+    geometry.setAttribute("position", new BufferAttribute(bufferData, 3));
 
     const normal = triangleNormal(vertices);
     const color = triangleColor(normal);

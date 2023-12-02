@@ -1,4 +1,4 @@
-import { Scene } from "three";
+import { BufferGeometry, Mesh, Scene, Vector3 } from "three";
 import { TriangleMesh } from "./triangle-mesh";
 
 function rand(a: number, b: number): number {
@@ -81,17 +81,13 @@ export class TriangleManager {
       const z1 = this.currentZ - TRIANGLE_DEPTH;
 
       // define 4 points two make two triangles
-      const frontLeft = [x0, y0Front, z0];
-      const frontRight = [x1, y1Front, z0];
-      const backLeft = [x0, y0Back, z1];
-      const backRight = [x1, y1Back, z1];
+      const frontLeft = new Vector3(x0, y0Front, z0);
+      const frontRight = new Vector3(x1, y1Front, z0);
+      const backLeft = new Vector3(x0, y0Back, z1);
+      const backRight = new Vector3(x1, y1Back, z1);
 
-      const left = new TriangleMesh(
-        new Float32Array([...frontLeft, ...frontRight, ...backLeft]),
-      );
-      const right = new TriangleMesh(
-        new Float32Array([...frontRight, ...backLeft, ...backRight]),
-      );
+      const left = new TriangleMesh([frontLeft, frontRight, backLeft]);
+      const right = new TriangleMesh([frontRight, backLeft, backRight]);
 
       this.triangles.push(left, right);
       this.scene.add(left);
